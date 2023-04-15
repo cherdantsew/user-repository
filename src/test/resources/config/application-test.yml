@@ -1,0 +1,11 @@
+spring:
+  liquibase:
+    change-log: classpath:config/liquibase/master.xml
+    contexts: schema
+  datasource:
+    username: ${CONTAINER.USERNAME}
+    password: ${CONTAINER.PASSWORD}
+    url: ${CONTAINER.URL}
+  jpa:
+    hibernate:
+      ddl-auto: none

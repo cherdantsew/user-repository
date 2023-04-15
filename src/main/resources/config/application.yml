@@ -1,0 +1,9 @@
+spring:
+  liquibase:
+    change-log: classpath:config/liquibase/master.xml
+    contexts: schema
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:postgresql://localhost:5432/users
+    username: postgres
+    password: postgres
