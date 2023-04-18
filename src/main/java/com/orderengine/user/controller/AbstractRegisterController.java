@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 public abstract class AbstractRegisterController {
 
     private final IRegisterService registerService;
+
     @PostMapping("/register")
-    public void register(@RequestBody RegisterDataDto registerDataDto) {
+    protected void register(@RequestBody RegisterDataDto registerDataDto) {
         registerService.register(registerDataDto);
     }
+
 }

@@ -20,4 +20,5 @@ public class UserService {
     public User save(User user) {
         return repository.saveAndFlush(user);
     }
+
 }
