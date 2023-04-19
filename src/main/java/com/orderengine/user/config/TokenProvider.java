@@ -33,6 +33,7 @@ public class TokenProvider {
 
     public static final String AUTHORITIES_KEY = "auth";
     public static final String CURRENT_ROLE_KEY = "role";
+    public static final String LOGIN_KEY = "login";
 
     protected final String secretKey;
     protected final long tokenValidityMillis;
@@ -48,7 +49,6 @@ public class TokenProvider {
         );
         this.tokenValidityMillis = multiplierToMillis * tokenValidityInSecond;
     }
-
 
     public boolean validateToken(String authToken) {
         try {

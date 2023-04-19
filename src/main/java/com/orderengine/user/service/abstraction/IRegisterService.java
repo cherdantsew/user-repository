@@ -1,7 +1,8 @@
 package com.orderengine.user.service.abstraction;
 
 import com.orderengine.user.model.dto.RegisterDataDto;
+import com.orderengine.user.model.dto.UserDto;
 
 public interface IRegisterService {
-    void register(RegisterDataDto registerDataDto);
+    UserDto register(RegisterDataDto registerDataDto);
 }

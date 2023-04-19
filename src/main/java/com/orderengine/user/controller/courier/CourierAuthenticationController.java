@@ -1,7 +1,8 @@
 package com.orderengine.user.controller.courier;
 
 import com.orderengine.user.controller.AbstractAuthenticationController;
-import com.orderengine.user.service.UserAuthenticationService;
+import com.orderengine.user.service.AbstractCommonAuthenticationService;
+import com.orderengine.user.service.courier.CourierAuthenticationService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/courier/user-service")
 public class CourierAuthenticationController extends AbstractAuthenticationController {
 
-    public CourierAuthenticationController(UserAuthenticationService authenticationService) {
+    public CourierAuthenticationController(CourierAuthenticationService authenticationService) {
         super(authenticationService);
     }
 }

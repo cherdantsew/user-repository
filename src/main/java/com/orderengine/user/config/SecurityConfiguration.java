@@ -62,8 +62,8 @@ public class SecurityConfiguration {
                     "/courier/user-service/authenticate",
                     "/admin/user-service/authenticate"
                 ).permitAll();
-                auth.anyRequest().authenticated();
                 auth.requestMatchers("/admin/user-service/courier/**").hasRole(RolesConstants.ROLE_ADMIN.name());
+                auth.anyRequest().authenticated();
             })
             .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
             .httpBasic(Customizer.withDefaults());

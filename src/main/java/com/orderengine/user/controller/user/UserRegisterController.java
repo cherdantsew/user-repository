@@ -1,7 +1,7 @@
 package com.orderengine.user.controller.user;
 
 import com.orderengine.user.controller.AbstractRegisterController;
-import com.orderengine.user.service.UserRegisterService;
+import com.orderengine.user.service.user.UserRegisterService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

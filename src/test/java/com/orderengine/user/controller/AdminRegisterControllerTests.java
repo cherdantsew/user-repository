@@ -3,38 +3,37 @@ package com.orderengine.user.controller;
 import com.orderengine.user.SpringBootApplicationTest;
 import com.orderengine.user.model.dto.RegisterDataDto;
 import com.orderengine.user.model.entity.User;
-import com.orderengine.user.repository.UserRepository;
+import com.orderengine.user.model.enumeration.RolesConstants;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.util.Collections;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class UserRegisterControllerTests extends SpringBootApplicationTest {
+public class AdminRegisterControllerTests extends SpringBootApplicationTest {
 
-    private static final String USER_REGISTER_URL = "/user/user-service/register";
+    private static final String ADMIN_REGISTER_URL = "/admin/user-service/register";
 
     @Test
-    void shouldCreateNewUser() throws Exception {
+    void shouldReturnForbiddenIfHaveNoPermission() throws Exception {
         var registerDataDto = new RegisterDataDto("login1", "password1");
-        mockmvc.perform(post(USER_REGISTER_URL)
+        mockmvc.perform(post(ADMIN_REGISTER_URL)
             .content(objectMapper.writeValueAsString(registerDataDto))
             .contentType(MediaType.APPLICATION_JSON)
-        ).andExpect(status().isOk());
-
-        User user = userRepository.findByLogin(registerDataDto.getLogin());
-        Assertions.assertEquals(user.getPassword(), registerDataDto.getPassword());
+        ).andExpect(status().isForbidden());
     }
 
     @Test
-    void shouldReturnBadRequestIfCreateUserWithAdminLogin() throws Exception {
+    void shouldReturnBadRequestIfCreateCourierWithAdminLogin() throws Exception {
         var registerDataDto = new RegisterDataDto("login", "password");
-        mockmvc.perform(post(USER_REGISTER_URL)
+        String token = createToken("login", RolesConstants.ROLE_ADMIN, Collections.emptyList());
+        mockmvc.perform(post(ADMIN_REGISTER_URL)
             .content(objectMapper.writeValueAsString(registerDataDto))
+                .header(HttpHeaders.AUTHORIZATION, token)
             .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isBadRequest());
     }

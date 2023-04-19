@@ -1,7 +1,8 @@
 package com.orderengine.user.controller.user;
 
 import com.orderengine.user.controller.AbstractAuthenticationController;
-import com.orderengine.user.service.UserAuthenticationService;
+import com.orderengine.user.service.AbstractCommonAuthenticationService;
+import com.orderengine.user.service.user.UserAuthenticationService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

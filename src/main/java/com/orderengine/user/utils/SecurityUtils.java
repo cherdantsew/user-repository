@@ -1,10 +1,12 @@
 package com.orderengine.user.utils;
 
 import com.orderengine.user.model.enumeration.RolesConstants;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
 
@@ -15,9 +17,10 @@ public class SecurityUtils {
     }
 
     public static RolesConstants currentRole() {
-        var role = (String) getSecurityContextDetails().orElseThrow().get("role");
+        var role = (String) getSecurityContextDetails().orElse(Collections.EMPTY_MAP).get("role");
         return role == null ? null : RolesConstants.valueOf(role);
     }
+
     private static Optional<Map<String, Object>> getSecurityContextDetails() {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication authentication = securityContext.getAuthentication();
