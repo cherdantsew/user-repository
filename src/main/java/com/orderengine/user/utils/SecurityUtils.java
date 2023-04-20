@@ -27,6 +27,4 @@ public class SecurityUtils {
         if (authentication == null) return Optional.empty();
         return Optional.of((Map<String, Object>) authentication.getDetails());
     }
-
-
 }

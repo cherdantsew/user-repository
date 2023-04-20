@@ -12,6 +12,10 @@ import org.springframework.boot.test.util.TestPropertyValues;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Import;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -24,9 +28,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @SpringBootTest
-//    (classes = {UserApplicationTests.class},
-//    webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
-//)
 @Testcontainers
 @AutoConfigureMockMvc(addFilters = false)
 @ContextConfiguration(initializers = {SpringBootApplicationTest.Initializer.class})
@@ -46,16 +47,20 @@ public class SpringBootApplicationTest {
     @Autowired
     private TokenProvider tokenProvider;
 
+    @Autowired
+    protected PasswordEncoder bCryptPasswordEncoder;
+
     private static final String DATABASE_NAME = "users";
 
     @Container
     public static PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:11.1")
-        .withReuse(true)
         .withDatabaseName(DATABASE_NAME);
 
-    protected String createToken(String username, RolesConstants currentRole, List<AuthoritiesConstants> authorities) {
+    protected String authenticateAndReturnToken(String username, RolesConstants currentRole, List<AuthoritiesConstants> authorities) {
         TokenProvider.JwtTokenConfiguration jwtTokenConfiguration = new TokenProvider.JwtTokenConfiguration(username, authorities.stream().map(AuthoritiesConstants::name).collect(Collectors.joining()), currentRole.name());
         String jwt = tokenProvider.createToken(jwtTokenConfiguration);
+        Authentication authentication = tokenProvider.getAuthentication(jwt);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
         return String.format("Bearer %s", jwt);
     }
 

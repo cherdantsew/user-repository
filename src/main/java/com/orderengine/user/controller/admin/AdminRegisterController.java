@@ -7,8 +7,6 @@ import com.orderengine.user.model.dto.UserDto;
 import com.orderengine.user.model.enumeration.RolesConstants;
 import com.orderengine.user.service.admin.AdminRegisterService;
 import com.orderengine.user.utils.SecurityUtils;
-import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,19 +16,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/admin/user-service")
-public class AdminRegisterController {
+public class AdminRegisterController extends AbstractRegisterController {
 
-    @Autowired
-    AdminRegisterService adminRegisterService;
-//    public AdminRegisterController(AdminRegisterService registerService) {
-//        super(registerService);
-//    }
+    public AdminRegisterController(AdminRegisterService registerService) {
+        super(registerService);
+    }
 
-//    @Override
+    @Override
     @PostMapping("/register")
-    protected ResponseEntity<UserDto> register(@RequestBody RegisterDataDto registerDataDto, HttpServletRequest request) {
+    protected ResponseEntity<UserDto> register(@RequestBody RegisterDataDto registerDataDto) {
         if (RolesConstants.ROLE_ADMIN == SecurityUtils.currentRole()) {
-            return new ResponseEntity(adminRegisterService.register(registerDataDto), HttpStatus.OK);
-        } else return new ResponseEntity(HttpStatus.FORBIDDEN);
+            return super.register(registerDataDto);
+        } else return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 }

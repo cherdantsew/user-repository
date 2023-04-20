@@ -1,4 +1,4 @@
-package com.orderengine.user;
+package com.orderengine.user.util;
 
 import java.util.Random;
 import java.util.stream.Collectors;

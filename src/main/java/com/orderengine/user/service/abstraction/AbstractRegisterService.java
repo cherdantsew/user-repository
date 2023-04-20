@@ -8,6 +8,7 @@ import com.orderengine.user.service.RoleService;
 import com.orderengine.user.service.UserService;
 import jakarta.transaction.Transactional;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Set;
 
@@ -15,9 +16,9 @@ public abstract class AbstractRegisterService implements IRegisterService, IRole
 
     private UserService userService;
     private RoleService roleService;
-    private BCryptPasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
-    public AbstractRegisterService(UserService userService, RoleService roleService, BCryptPasswordEncoder passwordEncoder) {
+    public AbstractRegisterService(UserService userService, RoleService roleService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.roleService = roleService;
         this.passwordEncoder = passwordEncoder;

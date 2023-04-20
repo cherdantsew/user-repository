@@ -12,6 +12,7 @@ import com.orderengine.user.service.abstraction.IRegisterService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
@@ -19,7 +20,7 @@ import java.util.Set;
 @Service
 public class UserRegisterService extends AbstractRegisterService {
 
-    public UserRegisterService(UserService userService, RoleService roleService, BCryptPasswordEncoder passwordEncoder) {
+    public UserRegisterService(UserService userService, RoleService roleService, PasswordEncoder passwordEncoder) {
         super(userService, roleService, passwordEncoder);
     }
 
