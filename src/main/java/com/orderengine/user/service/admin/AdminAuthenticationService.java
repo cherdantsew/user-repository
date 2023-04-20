@@ -17,11 +17,6 @@ public class AdminAuthenticationService extends AbstractCommonAuthenticationServ
     }
 
     @Override
-    public ResponseEntity<Object> authenticate(UserAuthDataDto userAuthDataDto) {
-        return null;
-    }
-
-    @Override
     protected RolesConstants getRoleByLoginUrl() {
         return RolesConstants.ROLE_ADMIN;
     }

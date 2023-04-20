@@ -4,9 +4,11 @@ import com.orderengine.user.model.entity.User;
 import com.orderengine.user.model.enumeration.RolesConstants;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @Data
+@NoArgsConstructor
 public class UserDto {
     private String login;
     private RolesConstants role;

@@ -2,15 +2,19 @@ package com.orderengine.user.service;
 
 import com.orderengine.user.config.JWTConfigurer;
 import com.orderengine.user.config.TokenProvider;
+import com.orderengine.user.model.dto.JWTToken;
 import com.orderengine.user.model.dto.UserAuthDataDto;
 import com.orderengine.user.model.entity.User;
 import com.orderengine.user.model.enumeration.RolesConstants;
 import com.orderengine.user.service.abstraction.IAuthenticationService;
 import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -37,7 +41,7 @@ public abstract class AbstractCommonAuthenticationService implements IAuthentica
     private final AuthenticationManager authenticationManager;
 
     @Override
-    public ResponseEntity<Object> authenticate(UserAuthDataDto userAuthDataDto) {
+    public ResponseEntity authenticate(UserAuthDataDto userAuthDataDto) {
         User user = userService.findUserByLogin(userAuthDataDto.getLogin()).orElseThrow(NoSuchElementException::new);
         if (getRoleByLoginUrl() != user.getRoles().stream().findFirst().orElseThrow().getRoleName()) {
             return buildUnauthorizedAuthenticationUrlResponse();
@@ -53,7 +57,7 @@ public abstract class AbstractCommonAuthenticationService implements IAuthentica
         return buildSuccessAuthResponse(token, authentication, user);
     }
 
-    private ResponseEntity<Object> buildSuccessAuthResponse(UsernamePasswordAuthenticationToken token, Authentication authentication, User user) {
+    private ResponseEntity<JWTToken> buildSuccessAuthResponse(UsernamePasswordAuthenticationToken token, Authentication authentication, User user) {
         Map<String, Object> tokenDetails = Map.of(CURRENT_ROLE_KEY, user.getRoles().stream().findFirst().orElseThrow().getRoleName().name(), LOGIN_KEY, user.getLogin());
         token.setDetails(tokenDetails);
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -61,7 +65,8 @@ public abstract class AbstractCommonAuthenticationService implements IAuthentica
         String jwtTokenString = tokenProvider.createToken(TokenProvider.JwtTokenConfiguration.fromParams(authentication, authorities, tokenDetails));
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JWTConfigurer.AUTHORIZATION_HEADER, "Bearer " + jwtTokenString);
-        return new ResponseEntity(new JWTToken(jwtTokenString), httpHeaders, HttpStatus.OK);
+        httpHeaders.add("Content-type", MediaType.APPLICATION_JSON_VALUE);
+        return new ResponseEntity<>(new JWTToken(jwtTokenString), httpHeaders, HttpStatus.OK);
     }
 
     ResponseEntity<Object> buildAuthError(String message) {
@@ -74,8 +79,4 @@ public abstract class AbstractCommonAuthenticationService implements IAuthentica
 
     protected abstract RolesConstants getRoleByLoginUrl();
 
-    @AllArgsConstructor
-    private class JWTToken {
-        private String jwt;
-    }
 }

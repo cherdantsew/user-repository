@@ -1,4 +1,5 @@
 package com.orderengine.user;
+
 import com.orderengine.user.config.TestBeansConfig;
 import com.orderengine.user.config.TokenProvider;
 import com.orderengine.user.model.enumeration.AuthoritiesConstants;
@@ -13,7 +14,6 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
@@ -24,6 +24,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @SpringBootTest
+//    (classes = {UserApplicationTests.class},
+//    webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
+//)
 @Testcontainers
 @AutoConfigureMockMvc(addFilters = false)
 @ContextConfiguration(initializers = {SpringBootApplicationTest.Initializer.class})

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/user/user-service")
+@RequestMapping( "/user/user-service")
 public class UserAuthenticationController extends AbstractAuthenticationController {
 
     public UserAuthenticationController(UserAuthenticationService authenticationService) {

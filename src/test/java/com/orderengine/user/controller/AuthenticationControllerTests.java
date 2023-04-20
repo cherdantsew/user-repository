@@ -16,7 +16,7 @@ public class AuthenticationControllerTests extends SpringBootApplicationTest {
     @Test
     public void shouldAuthenticateAdminAndReturnToken() throws JsonProcessingException {
             var registerDataDto = new RegisterDataDto("login1", "password1");
-//            mockmvc.perform(post("/user/register")
+//            mockmvc.perform(post("/admin/user-service")
 //                .content(objectMapper.writeValueAsString(registerDataDto))
 //                .contentType(MediaType.APPLICATION_JSON)
 //            ).andExpect(status().isOk());

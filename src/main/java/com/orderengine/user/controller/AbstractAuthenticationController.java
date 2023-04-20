@@ -13,7 +13,7 @@ public abstract class AbstractAuthenticationController {
     private final IAuthenticationService authenticationService;
 
     @PostMapping("/authenticate")
-    public ResponseEntity<Object> authenticate(@RequestBody UserAuthDataDto userAuthDataDto) {
+    protected ResponseEntity<Object> authenticate(@RequestBody UserAuthDataDto userAuthDataDto) {
         return authenticationService.authenticate(userAuthDataDto);
     }
 }
