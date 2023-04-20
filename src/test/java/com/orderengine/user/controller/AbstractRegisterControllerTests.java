@@ -39,11 +39,11 @@ public abstract class AbstractRegisterControllerTests extends SpringBootApplicat
     }
 
     @Test
-    void shouldReturnBadRequestIfCreateCourierWithExistedLogin() throws Exception {
+    void shouldReturnBadRequestIfCreateUserWithExistedLogin() throws Exception {
         if (needToAuthenticateUserBeforeRequest()) {
             authenticateAdmin();
         }
-        var registerDataDto = new RegisterDataDto(randomString(), randomString());
+        var registerDataDto = new RegisterDataDto("login", randomString());
         mockmvc.perform(post(regUrl)
             .content(objectMapper.writeValueAsString(registerDataDto))
             .contentType(MediaType.APPLICATION_JSON)
