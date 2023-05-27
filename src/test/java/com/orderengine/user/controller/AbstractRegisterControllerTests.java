@@ -17,7 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 public abstract class AbstractRegisterControllerTests extends SpringBootApplicationTest {
 
-    private String regUrl;
+    private final String regUrl;
 
     public AbstractRegisterControllerTests(String regUrl) {
         this.regUrl = regUrl;

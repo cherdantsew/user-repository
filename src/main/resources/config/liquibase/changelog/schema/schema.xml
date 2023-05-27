@@ -9,4 +9,5 @@
     <include file="/config/liquibase/changelog/schema/create_table_user_role.sql" relativeToChangelogFile="false" />
     <include file="/config/liquibase/changelog/schema/insert_admin_to_users.sql" relativeToChangelogFile="false" />
     <include file="/config/liquibase/changelog/schema/update_roles.sql" relativeToChangelogFile="false" />
+    <include file="/config/liquibase/changelog/schema/add_authorities_to_users.sql" relativeToChangelogFile="false" />
 </databaseChangeLog>
