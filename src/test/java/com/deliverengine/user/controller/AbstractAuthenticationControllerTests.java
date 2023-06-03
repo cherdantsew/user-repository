@@ -44,6 +44,7 @@ public abstract class AbstractAuthenticationControllerTests extends SpringBootAp
         Assertions.assertNotEquals(user.getPassword(), registerDataDto.getPassword());
 
         UserAuthDataDto authDataDto = new UserAuthDataDto(registerDataDto.getLogin(), registerDataDto.getPassword());
+
         MvcResult mvcResult = mockmvc.perform(post(authUrl)
             .content(objectMapper.writeValueAsString(authDataDto))
             .contentType(MediaType.APPLICATION_JSON_VALUE)

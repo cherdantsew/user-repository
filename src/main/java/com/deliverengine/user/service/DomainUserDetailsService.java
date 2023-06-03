@@ -7,6 +7,7 @@ import com.deliverengine.user.repository.UserRepository;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -40,7 +41,7 @@ public class DomainUserDetailsService implements UserDetailsService {
     private org.springframework.security.core.userdetails.User createSpringSecurityUser(String lowercaseLogin, User user) {
         List<AuthoritiesConstants> authorities = user.getRoles().stream()
             .map(Role::getAuthorities)
-            .distinct()
+            .flatMap(it -> Stream.of(it.split(",")))
             .map(AuthoritiesConstants::valueOf)
             .collect(Collectors.toList());
 

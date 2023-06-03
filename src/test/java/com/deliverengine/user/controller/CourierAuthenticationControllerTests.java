@@ -8,6 +8,6 @@ public class CourierAuthenticationControllerTests extends AbstractAuthentication
 
     @Override
     protected Boolean needToAuthenticateUserBeforeRequest() {
-        return false;
+        return true;
     }
 }

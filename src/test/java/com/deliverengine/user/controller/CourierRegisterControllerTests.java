@@ -10,6 +10,6 @@ public class CourierRegisterControllerTests extends AbstractRegisterControllerTe
 
     @Override
     protected Boolean needToAuthenticateUserBeforeRequest() {
-        return false;
+        return true;
     }
 }

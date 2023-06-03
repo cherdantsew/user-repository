@@ -1,6 +1,5 @@
 package com.deliverengine.user.config;
 
-import com.deliverengine.core.enumeration.RolesConstants;
 import com.deliverengine.core.security.jwt.JwtTokenFilter;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -44,8 +43,8 @@ public class SecurityConfiguration {
                     "/courier/user-service/authenticate",
                     "/admin/user-service/authenticate"
                 ).permitAll();
-                auth.requestMatchers("/admin/user-service/courier/**").hasRole(RolesConstants.ROLE_ADMIN.name());
-                auth.requestMatchers("/admin/user-service/register/**").hasRole(RolesConstants.ROLE_ADMIN.name());
+//                auth.requestMatchers("/admin/user-service/courier/**").hasRole(RolesConstants.ROLE_ADMIN.name());
+//                auth.requestMatchers("/admin/user-service/register/**").hasRole(RolesConstants.ROLE_ADMIN.name());
                 auth.anyRequest().authenticated();
             })
             .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
