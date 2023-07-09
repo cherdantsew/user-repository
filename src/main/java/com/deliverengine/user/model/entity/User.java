@@ -1,5 +1,6 @@
 package com.deliverengine.user.model.entity;
 
+import com.deliverengine.core.enumeration.CourierStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -10,16 +11,16 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.Hibernate;
-
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -43,6 +44,12 @@ public class User {
         joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
         inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
     private Set<Role> roles = new HashSet<>();
+    @Column(name = "contact_info")
+    private String contactInfo;
+    @Column(name = "courier_status")
+    private CourierStatus courierStatus;
+    @Column(name = "account_balance")
+    private BigDecimal accountBalance;
 
     @Override
     public boolean equals(Object o) {
